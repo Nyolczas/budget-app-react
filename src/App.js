@@ -3,65 +3,44 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect,
-  useLocation
+  Link
  } from 'react-router-dom';
+
+ import HomePage from './components/HomePage';
+ import CreatePage from './components/CreatePage';
+ import EditPage from './components/EditPage';
+ import NoMatchPage from './components/NoMatchPage';
 
 function App() {
   return (
     <Router>
       <div>
+        <h1>Költségvető</h1>
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">Főoldal</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
+              <Link to="/create">Létrehozás</Link>
             </li>
           </ul>
         </nav>
 
         <Switch>
-          <Route path="/about">
-            <div>
-              About
-            </div>
+          <Route path="/create">
+            <CreatePage />
           </Route>
-          <Route path="/users">
-            <div>
-              Users
-            </div>
-          </Route>
+          <Route path="/edit/:id" component={EditPage} />
           <Route exact path="/">
-            <div>
-              Dashboard Page
-            </div>
+            <HomePage />
           </Route>
           <Route path="*">
-            <NoMatch />
+            <NoMatchPage />
           </Route>
         </Switch>
       </div>
     </Router>
-  );
-}
-
-function NoMatch() {
-  let location = useLocation();
-
-  return (
-    <div>
-      <h1>404</h1>
-      <h3>
-        Az oldal nem létezik: <code>{location.pathname}</code>
-      </h3>
-      <Link to="/">Vissza a főoldalra</Link>
-    </div>
   );
 }
 
