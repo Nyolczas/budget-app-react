@@ -1,15 +1,66 @@
 import React from 'react';
+import { 
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useLocation
+ } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <h1>H1</h1>
-      <h2>H2</h2>
-      <h3>H3</h3>
-      <h4>H4</h4>
-      <h5>H5</h5>
-      <h6>H6</h6>
-      <p>p</p>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Switch>
+          <Route path="/about">
+            <div>
+              About
+            </div>
+          </Route>
+          <Route path="/users">
+            <div>
+              Users
+            </div>
+          </Route>
+          <Route exact path="/">
+            <div>
+              Dashboard Page
+            </div>
+          </Route>
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+function NoMatch() {
+  let location = useLocation();
+
+  return (
+    <div>
+      <h1>404</h1>
+      <h3>
+        Az oldal nem létezik: <code>{location.pathname}</code>
+      </h3>
+      <Link to="/">Vissza a főoldalra</Link>
     </div>
   );
 }
